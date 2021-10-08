@@ -9,7 +9,8 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
     // don't use binary tree for implementing the heap.
      public MaxHeap(){
          heap = new ArrayList<E>();
-    }
+    } // MaxHeap
+
     // returns max value
     public E findMax() {
         E max;
@@ -23,7 +24,7 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
                     max = heap.get(i);
         }
         return max;
-    }
+    }// findMax
 
     // adds a new value to the heap at the end of the Heap and
     // adjusts values up to the root to ensure Max heap property is satisfied.
@@ -37,23 +38,25 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
             swap(heap, addnew, parent(addnew));
             addnew = parent(addnew);
         }
-     }
+     }// addHeap
+
     //returns the max value at the root of the heap by swapping the last value
     // and percolating the value down from the root to preserve max heap property
     // children of node at i are given by the formula 2i+1,2i+2, to not exceed the
     // bounds of the Heap index, namely, 0 ... size()-1.
     // throw appropriate exception
     public E removeHeap()  throws NoSuchElementException{
-        if (heap.size() ==0) {
+        if (heap.size() ==0)
             throw new NoSuchElementException();
-        } else if (heap.size() ==1) {
+
+        else if (heap.size() ==1)
             return heap.remove(0);
-        }
+
         E tmp = heap.get(0);
         heap.set(0, heap.remove(heap.size()-1));
         adjustDown();
         return tmp;
-    }
+    } //removeHeap
 
     // takes a list of items E and builds the heap and then prints
     // decreasing values of E with calls to removeHeap().
@@ -67,85 +70,81 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
             list.set(i, tmp);
             addHeap((E) list);
         }
-    }
+    } //heapSort
 
     // merges the other maxheap with this maxheap to produce a new maxHeap.
     public void heapMerge(MaxHeap<E> other){
         int resultHeapSize = heap.size() + other.size();
         int[] resultMaxHeap = new int[resultHeapSize];
-        for (int i = 0; i < heap.size(); i++) {
+
+        for (int i = 0; i < heap.size(); i++)
             resultMaxHeap[i] = heap[i];
-        }
-        for (int i = 0; i < other.size(); i++) {
+
+        for (int i = 0; i < other.size(); i++)
             resultMaxHeap[heap.size() + i] = other[i];
-        }
 
         // Builds a max heap of given arr[0..n-1]
-        for (int i = resultHeapSize / 2 - 1; i >= 0; i--) {
+        for (int i = resultHeapSize / 2 - 1; i >= 0; i--)
             maxHeapify(resultMaxHeap, resultHeapSize, i);
-        }
-    }
+    } //heapMerge
 
-    //takes a list of items E and builds the heap by calls to addHeap(..)
+    //takes a list of items E and builds the heap by calls to addHeap
     public void buildHeap(List<E> list) {
         int n =list.size();
         for (int i = 0; i < n; ++i)
             System.out.print(list.get(i) + " ");
         System.out.println();
-    }
-    
-    
-    
-    
-    
-    
-    
+    } //buildHeap
+
+
+
+
+
+
+
     private static void maxHeapify(int[] arr, int n, int i) {
-        if (i >= n) {
+        if (i >= n)
             return;
-        }
-        int l = i * 2 + 1;
-        int r = i * 2 + 2;
+        int left=i*2+1;
+        int right=i*2+2;
         int max;
-        if (l < n && arr[l] > arr[i]) {
-            max = l;
-        } else
-            max = i;
-        if (r < n && arr[r] > arr[max]) {
-            max = r;
-        }
-    }
+        if (left<n && arr[left]>arr[i])
+            max=left;
+        else
+            max=i;
+        if (right<n && arr[right]>arr[max])
+            max = right;
+     } // maxheapify
+
     private static <E> void swap(ArrayList<E> a, int i, int j) {
         E t = a.get(i);
         a.set(i, a.get(j));
         a.set(j, t);
-    }
+    } //swap
 
     private static int parent(int i) {
         return (i-1)/2;
-    }
+    } // parent
+
     private void adjustDown() {
         int k = 0;
         int left = 1;
-
-        while(left < heap.size()) {
+        while (left < heap.size()) {
             int max = left;
             int right = left + 1;
             if (right < heap.size()) {
-                if(heap.get(right).compareTo(heap.get(left)) > 0) {
+                if (heap.get(right).compareTo(heap.get(left)) > 0)
                     max = right;
-                }
             }
             E parent = heap.get(k);
             E child = heap.get(max);
-            if(parent.compareTo(child) < 0) {
+            if (parent.compareTo(child) < 0) {
                 heap.set(k, child);
                 heap.set(max, parent);
                 k = max;
                 left = 2*k+1;
-            } else {
+            } else
                 break;
-            }
         }
-    }
-}
+    } // adjustDown
+} // class MaxHeap
