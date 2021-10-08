@@ -10,21 +10,6 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
      public MaxHeap(){
          heap = new ArrayList<E>();
     }
-    private static void maxHeapify(int[] arr, int n, int i) {
-        if (i >= n) {
-            return;
-        }
-        int l = i * 2 + 1;
-        int r = i * 2 + 2;
-        int max;
-        if (l < n && arr[l] > arr[i]) {
-            max = l;
-        } else
-            max = i;
-        if (r < n && arr[r] > arr[max]) {
-            max = r;
-        }
-    }
     // returns max value
     public E findMax() {
         E max;
@@ -53,39 +38,6 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
             addnew = parent(addnew);
         }
      }
-     private static <E> void swap(ArrayList<E> a, int i, int j) {
-         E t = a.get(i);
-         a.set(i, a.get(j));
-         a.set(j, t);
-     }
-
-    private static int parent(int i) {
-         return (i-1)/2;
-    }
-    private void adjustDown() {
-        int k = 0;
-        int left = 1;
-
-        while(left < heap.size()) {
-            int max = left;
-            int right = left + 1;
-            if (right < heap.size()) {
-                if(heap.get(right).compareTo(heap.get(left)) > 0) {
-                    max = right;
-                }
-            }
-            E parent = heap.get(k);
-            E child = heap.get(max);
-            if(parent.compareTo(child) < 0) {
-                heap.set(k, child);
-                heap.set(max, parent);
-                k = max;
-                left = 2*k+1;
-            } else {
-                break;
-            }
-        }
-    }
     //returns the max value at the root of the heap by swapping the last value
     // and percolating the value down from the root to preserve max heap property
     // children of node at i are given by the formula 2i+1,2i+2, to not exceed the
@@ -141,5 +93,59 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
             System.out.print(list.get(i) + " ");
         System.out.println();
     }
+    
+    
+    
+    
+    
+    
+    
+    private static void maxHeapify(int[] arr, int n, int i) {
+        if (i >= n) {
+            return;
+        }
+        int l = i * 2 + 1;
+        int r = i * 2 + 2;
+        int max;
+        if (l < n && arr[l] > arr[i]) {
+            max = l;
+        } else
+            max = i;
+        if (r < n && arr[r] > arr[max]) {
+            max = r;
+        }
+    }
+    private static <E> void swap(ArrayList<E> a, int i, int j) {
+        E t = a.get(i);
+        a.set(i, a.get(j));
+        a.set(j, t);
+    }
 
+    private static int parent(int i) {
+        return (i-1)/2;
+    }
+    private void adjustDown() {
+        int k = 0;
+        int left = 1;
+
+        while(left < heap.size()) {
+            int max = left;
+            int right = left + 1;
+            if (right < heap.size()) {
+                if(heap.get(right).compareTo(heap.get(left)) > 0) {
+                    max = right;
+                }
+            }
+            E parent = heap.get(k);
+            E child = heap.get(max);
+            if(parent.compareTo(child) < 0) {
+                heap.set(k, child);
+                heap.set(max, parent);
+                k = max;
+                left = 2*k+1;
+            } else {
+                break;
+            }
+        }
+    }
 }
