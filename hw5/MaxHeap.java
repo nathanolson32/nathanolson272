@@ -10,7 +10,21 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
      public MaxHeap(){
          heap = new ArrayList<E>();
     }
-
+    private static void maxHeapify(int[] arr, int n, int i) {
+        if (i >= n) {
+            return;
+        }
+        int l = i * 2 + 1;
+        int r = i * 2 + 2;
+        int max;
+        if (l < n && arr[l] > arr[i]) {
+            max = l;
+        } else
+            max = i;
+        if (r < n && arr[r] > arr[max]) {
+            max = r;
+        }
+    }
     // returns max value
     public E findMax() {
         E max;
@@ -105,22 +119,18 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
 
     // merges the other maxheap with this maxheap to produce a new maxHeap.
     public void heapMerge(MaxHeap<E> other){
-        PriorityQueue<ArrayContainer> queue = new PriorityQueue<ArrayContainer>();
-        int total=0;
-        for (int i = 0; i < other.size(); i++) {
-            queue.add(new ArrayContainer(other[i], 0));
-            total =total + other[i].length;
+        int resultHeapSize = heap.size() + other.size();
+        int[] resultMaxHeap = new int[resultHeapSize];
+        for (int i = 0; i < heap.size(); i++) {
+            resultMaxHeap[i] = heap[i];
         }
-        int m=0;
-        int result[] = new int[total];
+        for (int i = 0; i < other.size(); i++) {
+            resultMaxHeap[heap.size() + i] = other[i];
+        }
 
-        while (!queue.isEmpty()) {
-            ArrayContainer ac = queue.poll();
-            result[m++]=ac.other[ac.index];
-
-            if (ac.index < ac.other.size()-1) {
-                queue.add(new ArrayContainer(ac.other, ac.index+1));
-            }
+        // Builds a max heap of given arr[0..n-1]
+        for (int i = resultHeapSize / 2 - 1; i >= 0; i--) {
+            maxHeapify(resultMaxHeap, resultHeapSize, i);
         }
     }
 
@@ -131,15 +141,5 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
             System.out.print(list.get(i) + " ");
         System.out.println();
     }
-    static void buildHeap(int arr[], int n) {
-        // Index of last non-leaf node
-        int startIdx = (n / 2) - 1;
 
-        // Perform reverse level order traversal
-        // from last non-leaf node and heapify
-        // each node
-        for (int i = startIdx; i >= 0; i--) {
-            heapify(arr, n, i);
-        }
-    }
 }
