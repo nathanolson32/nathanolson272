@@ -65,7 +65,7 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
         for (int i = n /2 -1; i >=0 ; i--)
             addHeap((E) list);
         for (int i = n-1; i > 0; i--) {
-            int tmp = list[0];
+            int tmp = (int) list.get(0);
             list.set(0, list.get(i));
             list.set(i, tmp);
             addHeap((E) list);
@@ -78,10 +78,10 @@ public class MaxHeap<E extends Comparable<E>> extends ArrayList<E>   {
         int[] resultMaxHeap = new int[resultHeapSize];
 
         for (int i = 0; i < heap.size(); i++)
-            resultMaxHeap[i] = heap[i];
+            resultMaxHeap[i] = (int) heap.get(i);
 
         for (int i = 0; i < other.size(); i++)
-            resultMaxHeap[heap.size() + i] = other[i];
+            resultMaxHeap[heap.size() + i] = (int) other.get(i);
 
         // Builds a max heap of given arr[0..n-1]
         for (int i = resultHeapSize / 2 - 1; i >= 0; i--)
