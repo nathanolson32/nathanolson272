@@ -1,2 +1,2 @@
 # nathanolson272
-This is for homework for COMP272, including HW4.
+This is for homework for COMP272.
