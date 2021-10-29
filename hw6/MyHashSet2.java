@@ -22,7 +22,7 @@ public class MyHashSet {
         Scanner input = new Scanner(new File("C:\\Users\\Nate\\IdeaProjects\\COMP272\\src\\EnglishWordList.txt"));
         Set<String> ENGLAND = new HashSet<String>();
         while (input.hasNextLine())
-            ENGLAND.add(input.next().trim());
+            ENGLAND.add(input.nextLine().trim());
         input.close();
         for (String str : ENGLAND)
             System.out.println(str + " ");
