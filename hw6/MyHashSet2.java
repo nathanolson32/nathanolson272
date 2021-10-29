@@ -4,12 +4,6 @@ import java.io.*;
 
 public class MyHashSet {
 
-
-    public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) {
-        Set<T> set = new LinkedHashSet<>(list);
-        return new ArrayList<T>(set);
-    }
-
     // https://www.cpp.edu/~ftang/courses/CS240/lectures/hashing.htm
 
 
