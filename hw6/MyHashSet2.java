@@ -264,7 +264,6 @@ public abstract class myHashSet<E> implements Collection<E> {
                 }
             }
         }
-
         return list;
     }
 
@@ -279,7 +278,6 @@ public abstract class myHashSet<E> implements Collection<E> {
         if (list.size() == 0)
             builder.append("]");
         else builder.append(list.get(list.size() - 1) + "]");
-
         return builder.toString();
     }
 }
