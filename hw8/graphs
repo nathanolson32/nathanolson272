@@ -1,0 +1,155 @@
+import java.io.*;
+import java.util.*;
+
+
+class main {
+    public static void dfs(int[][] graph, int n, boolean[] visit) {
+        if (visit[n] == true)
+            return;
+        visit[n] = true;
+        System.out.print(n + " ");
+        for (int i = 0; i < graph[n].length; i++) {
+            if (visit[i] == false && graph[n][i] == 1)
+                dfs(graph, i, visit);
+        }
+    }
+    public static void bfs(int[][] graph, int n, boolean[] visit) {
+        ArrayList<Integer> ar = new ArrayList<Integer>();
+        ar.add(n);
+        visit[n] = true;
+        while (ar.size() > 0) {
+            int ans = ar.remove(0);
+            System.out.print(ans + " ");
+            for (int i = 0; i < graph[ans].length; i++) {
+                if (visit[i] == false && graph[ans][i] == 1) {
+                    visit[i] = true;
+                    ar.add(i);
+                }
+            }
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        BufferedReader br = null;
+        try {
+            String line;
+            br = new BufferedReader(new FileReader("C:\\Users\\Nate\\IdeaProjects\\COMP272\\src\\Email-Enron.txt"));
+            int n = Integer.parseInt(br.readLine());
+            int[][] graph = new int[7][7];
+            while ((line = br.readLine()) != null) {
+                String[] edge = line.split("    ");
+                graph[Integer.parseInt(edge[0])][Integer.parseInt(edge[1])] = 1;
+                graph[Integer.parseInt(edge[1])][Integer.parseInt(edge[0])] = 1;
+            }
+            System.out.println("Adjacency Matrix");
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++)
+                    System.out.print(graph[i][j] + " ");
+                System.out.println();
+            }
+            boolean[] visit = new boolean[n];
+            System.out.print("DFS at vertex 0: ");
+            dfs(graph, 0, visit);
+            System.out.println();
+            visit = new boolean[n];
+            System.out.print("BFS at vertex 0: ");
+            bfs(graph, 0, visit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+ class GFG {
+    static class Graph {
+        int V;
+        LinkedList<Integer>[] adj;
+
+        Graph(int V) {
+            this.V = V;
+            adj = new LinkedList[V];
+            for (int i = 0; i < adj.length; i++)
+                adj[i] = new LinkedList<Integer>();
+        }
+
+        void addEdge(int v, int w) {
+            adj[v].add(w); // Add w to v’s list.
+        }
+
+        void DFS(int s) {
+            Vector<Boolean> visited = new Vector<Boolean>(V);
+            for (int i = 0; i < V; i++)
+                visited.add(false);
+            Stack<Integer> stack = new Stack<>();
+            stack.push(s);
+            while(stack.empty() == false) {
+                s = stack.peek();
+                stack.pop();
+                if(visited.get(s) == false) {
+                    System.out.print(s + " ");
+                    visited.set(s, true);
+                }
+                Iterator<Integer> itr = adj[s].iterator();
+                while (itr.hasNext()) {
+                    int v = itr.next();
+                    if(!visited.get(v))
+                        stack.push(v);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(5);
+        g.addEdge(1, 0);
+        g.addEdge(0, 2);
+        g.addEdge(2, 1);
+        g.addEdge(0, 3);
+        g.addEdge(1, 4);
+        System.out.println("Following is the Depth First Traversal");
+        g.DFS(0);
+    }
+}
+
+
+    class Method2{
+        static int []parent = new int[1000000];
+        static int root(int a) {
+            if (a == parent[a]) {
+                return a;
+            }
+            return parent[a] = root(parent[a]);
+        }
+        static void connect(int a, int b) {
+            a = root(a);
+            b = root(b);
+            if (a != b) {
+                parent[b] = a;
+            }
+        }
+        static void connectedComponents(int n) {
+            HashSet<Integer> s = new HashSet<Integer>();
+            for (int i = 0; i < n; i++) {
+                s.add(parent[i]);
+            }
+            System.out.println(s.size());
+        }
+        static void printAnswer(int N,int [][] edges) {
+            for (int i = 0; i <= N; i++) {
+                parent[i] = i;
+            }
+            for (int i = 0; i < edges.length; i++) {
+                connect(edges[i][0], edges[i][1]);
+            }
+            connectedComponents(N);
+        }
+        public static void main(String[] args) {
+            int N = 8;
+            int [][]edges = {{ 1, 0 }, { 0, 2 },
+                    { 5, 3 }, { 3, 4 },
+                    { 6, 7 }};
+            printAnswer(N, edges);
+        }// the way to count the connected components from a simple graph, not through text.
+    }
